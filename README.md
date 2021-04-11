@@ -1,4 +1,4 @@
-# Coffee_Shop-Project
+# Cambridge_Coffee_Shop
 This is a side project extracting Coffee Shops information from CSV and Shapefile using basic PostGreSQL and PostGIS.\
 \
 The Coffee Shops SQL.md file contains some basic PostGreSQL working with Cambridge_coffee_shops database and Cambridge Neighborhood information. I couldn't find the R file in which I wrote the pricing analysis part :slightly_frowning_face:.\

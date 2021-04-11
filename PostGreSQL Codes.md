@@ -65,7 +65,7 @@ CREATE INDEX coffee_shops_gist
   USING gist (geom);
 ```
 ## Some Queries
-- Count the number of coffee shops within each neighborhood in Cambridge, MA.
+1. Count the number of coffee shops within each neighborhood in Cambridge, MA.
 ```javascript
 SELECT nbs.name as name, 
        count(*) as shops_in_the_area
@@ -76,7 +76,7 @@ GROUP BY nbs.name
 ORDER BY shops_in_the_area desc;
 ```
 
-- Select coffee shops base on their distance to MIT and Havard Square.\
+2. Select coffee shops base on their distance to MIT and Havard Square.
   - To get more accurate distance in meters, table **'coffee_shops_new'** needs to be reprojected to the local coordinate system (UTM 19N, equivalent EPSG 32619).
 ```javascript
 ALTER TABLE coffee_shops_new
@@ -84,4 +84,29 @@ ALTER TABLE coffee_shops_new
 
 UPDATE coffee_shops_new
   SET geom_utm = ST_Transform(geom, 32619);
+```
+  - Looking up for MIT and Havard Square's longitude and latitude via [gps-coordinates](https://www.gps-coordinates.net)
+  - MIT (-71.096646,42.3582393)
+  - Havard Square (-71.12015533447266, 42.37255859375)
+  - Select coffee shops near MIT order by distances.
+```javascript
+SELECT name, address, geom <-> ST_SetSRID(ST_MakePoint(-71.096646,42.3582393),4326) as dist_to_MIT
+FROM coffee_shops_new
+ORDER BY dist_to_MIT;
+```
+  - Select coffee shops within 2 KMs to Havard Square
+```javascript
+SELECT 
+  name, 
+  address,
+  geom_utm <-> ST_Transform(ST_SetSRID(ST_MakePoint(-71.12015533447266, 42.37255859375),
+                                       4326),
+                            32619) as dist_to_HS
+FROM coffee_shops_new
+WHERE ST_DWithin(geom_utm,
+                 ST_Transform(ST_SetSRID(ST_MakePoint(-71.12015533447266, 42.37255859375),
+                                         4326),
+                              32619),
+                 2000)
+ORDER BY dist_to_HS desc;
 ```

@@ -73,7 +73,7 @@ FROM coffee_shops_new as shops,
      cambridge_neighborhoods as nbs
 WHERE ST_Intersects(shops.geom, nbs.geom)
 GROUP BY nbs.name
-ORDER BY shops_in_the_area desc;
+ORDER BY shops_in_the_area DESC;
 ```
 
 2. Select coffee shops base on their distance to MIT and Havard Square.
@@ -108,5 +108,26 @@ WHERE ST_DWithin(geom_utm,
                                          4326),
                               32619),
                  2000)
-ORDER BY dist_to_HS desc;
+ORDER BY dist_to_HS DESC;
+```
+## Export Data
+Export data to a local CSV file by selecting Import/Export feature in the pgAdmin menu.\
+OR using the `\COPY` statement on psql:
+```javascript
+CREATE TABLE shops_near_HS AS
+  SELECT 
+    name, 
+    address,
+    geom_utm <-> ST_Transform(ST_SetSRID(ST_MakePoint(-71.12015533447266, 42.37255859375),
+                                         4326),
+                              32619) as dist_to_HS
+  FROM coffee_shops_new
+  WHERE ST_DWithin(geom_utm,
+                   ST_Transform(ST_SetSRID(ST_MakePoint(-71.12015533447266, 42.37255859375),
+                                           4326),
+                                32619),
+                   2000)
+  ORDER BY dist_to_HS DESC;
+ 
+ \COPY shops_near_HS TO '/my/file.csv' WITH CSV DELIMITER ',' HEADER;
 ```

@@ -1,3 +1,4 @@
+![Entity Relationship Diagram](https://github.com/yingraym813/Coffee_Shop-Project/blob/main/ERD.jpeg?raw=true)\
 **_This file contains some SQL queries I wrote when I was doing SQL Bootcamp Project._**
 1. Report the products that have not been sold.
 ```javascript

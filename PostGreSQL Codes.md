@@ -65,7 +65,7 @@ CREATE INDEX coffee_shops_gist
   USING gist (geom);
 ```
 ## Some Queries
-Count the number of coffee shops within each neighborhood in Cambridge, MA.
+- Count the number of coffee shops within each neighborhood in Cambridge, MA.
 ```javascript
 SELECT nbs.name as name, 
        count(*) as shops_in_the_area
@@ -76,8 +76,8 @@ GROUP BY nbs.name
 ORDER BY shops_in_the_area desc;
 ```
 
-Select coffee shops base on their distance to MIT and Havard Square.\
-To get more accurate distance in meters, table **'coffee_shops_new'** needs to be reprojected to the local coordinate system (UTM 19N, equivalent EPSG 32619).
+- Select coffee shops base on their distance to MIT and Havard Square.\
+  - To get more accurate distance in meters, table **'coffee_shops_new'** needs to be reprojected to the local coordinate system (UTM 19N, equivalent EPSG 32619).
 ```javascript
 ALTER TABLE coffee_shops_new
   ADD COLUMN geom_utm geometry(POINT, 32619);

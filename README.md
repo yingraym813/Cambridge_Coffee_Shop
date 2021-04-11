@@ -1,7 +1,7 @@
 # Cambridge_Coffee_Shop
 This is a side project extracting Coffee Shops information from CSV and Shapefile using basic PostGreSQL and PostGIS.\
 \
-The Coffee Shops SQL.md file contains some basic PostGreSQL working with Cambridge_coffee_shops database and Cambridge Neighborhood information. I couldn't find the R file in which I wrote the pricing analysis part :slightly_frowning_face:. The thought process was basically to find if earnings & number of orders correlate with distance to MIT, Havard Square, or other popular site in Cambridge, MA.\
+The Coffee Shops SQL.md file contains some basic PostGreSQL working with Cambridge_coffee_shops database and Cambridge Neighborhood information. I couldn't find the R file in which I wrote the pricing analysis part :slightly_frowning_face:. The thought process was basically to find if earnings & number of orders correlate with distance to MIT, Havard Square, or other popular site in Cambridge, MA. The main purpose was to get familar with PostGIS, pdAdmin, pgsq, and spatial database.\
 \
 The SQL Bootcamp Project.md file contains some queries from the SQL Bootcamp.\
 \
